@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Guess Game</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <style>
+        #currentWord {
+            letter-spacing: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Word Guess Game</h1>
+        <p>Welcome to Word Guess Name, press any key to get started!</p>
+
+        <!-- When user presses any key, start game -->
+        <h4>Wins</h4>
+        <div id="totalWins"></div>
+        <h4>Current Word</h4>
+        <div id=currentWord></div>
+        <h4>Guesses Remaining</h4>
+        <div id="remainingGuesses"></div>
+        <h4>Letters Guessed</h4>
+        <div id=guessedLetters></div>
+    </div>
+
+<!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>    
+    <script>
+    $(document).ready(function() {
+
+        var possibleWords = ["florence", "paris", "madrid", "rome", "bali", "belize"]
+        const maxGuess = 3
+
+        var guessedLetters = []
+        var guessingWord = []
+        var wordToMatch
+        var numGuess
+        var wins = 0
+        var gameOver = false
+
+        resetGame()
+
+        // Wait for key press
+        document.onkeypress = function(event) {
+                var keyPressed = event.key.toUpperCase()
+            if (gameOver) {
+                resetGame()
+                gameOver = false
+            }
+            else {
+                console.log (keyPressed)
+                // Make sure key pressed is an alpha character
+                // Why is 'enter' key accepted as alpha character?
+                if ((keyPressed >= "a" && keyPressed <= "z") || (keyPressed >= "A" && keyPressed <= "Z")){
+                    console.log("Is a letter")
+                    checkForLetter(keyPressed)
+                }
+            }
+        }
+
+        // Game Functions
+        function checkForLetter(letter) {
+            var foundLetter = false
+            console.log("CheckForLetter:letter= " + letter)
+
+            // Search string for letter
+            for (var i=0, j= wordToMatch.length; i<j; i++) {
+                if (letter === wordToMatch[i]) {
+                    guessingWord[i] = letter.toUpperCase()
+                    foundLetter = true
+                    console.log("guessingWord= "+ guessingWord)
+                    console.log("Letter index= " + i)
+                }
+            }
+            // If letter not in string, decrement number of guesses  
+            if (!foundLetter) {
+                numGuess--
+                // Check if inccorrect is already on the list
+                // Add incorrect letter to guessed letter list
+                guessedLetters.push(letter.toUpperCase())
+                console.log("numGuess= " + numGuess)
+                console.log("Guessed Letters= " + guessedLetters)
+                if (numGuess === 0) {
+                    gameOver = true
+                }
+            }
+            console.log("Guessing word join= "+ guessingWord.join("") + " wordToMatch= " + wordToMatch)
+            if (guessingWord.join("") === wordToMatch) {
+                // Increment # of wins
+                wins++
+                console.log("Wins= " + wins)
+                gameOver = true
+            }
+
+            updateDisplay()
+
+        }
+
+        function resetGame() {
+            numGuess = maxGuess
+
+            // Get a new word
+            wordToMatch = possibleWords[Math.floor(Math.random() * possibleWords.length)].toUpperCase()
+            console.log(wordToMatch)
+
+            // Reset word arrays
+            guessedLetters = []
+            guessingWord = []
+
+            // Reset the guessed word
+            for (var i=0, j=wordToMatch.length; i < j; i++){
+                guessingWord.push("_")
+            }
+            console.log(guessingWord)
+
+            // Update the Display
+            updateDisplay()
+        }
+
+        function updateDisplay () {
+            document.getElementById("totalWins").innerText = wins
+            document.getElementById("currentWord").innerText = ""
+            for (var i=0, j=guessingWord.length; i<j; i++) {
+                document.getElementById("currentWord").innerText += guessingWord[i]
+            }
+            document.getElementById("remainingGuesses").innerText = numGuess
+            document.getElementById("guessedLetters").innerText =  guessedLetters
+        }
+    })
+    </script>
+</body>
+</html>
