@@ -37,72 +37,66 @@
     <script>
     $(document).ready(function() {
 
-        var possibleWords = ["florence", "paris", "madrid", "rome", "bali", "belize"]
-        const maxGuess = 3
+        var possibleWords = ["florence", "paris", "madrid", "rome", "singapore", "dubai", "new york city", 
+                                "shanghai", "london", "tokoyo", "sydney", "toronto", "beijing", "moscow",
+                                "johannesburg", "istanbul", "warsaw", "jakarta", "kuala lumpur", "mexico city",
+                                "hong kong", "chicago", "seoul", "los angeles", "mumbai"]
+
+        const maxGuess = 10
 
         var guessedLetters = []
         var guessingWord = []
         var wordToMatch
         var numGuess
         var wins = 0
-        var gameOver = false
 
         resetGame()
 
         // Wait for key press
         document.onkeypress = function(event) {
-                var keyPressed = event.key.toUpperCase()
-            if (gameOver) {
-                resetGame()
-                gameOver = false
-            }
-            else {
-                console.log (keyPressed)
-                // Make sure key pressed is an alpha character
-                // Why is 'enter' key accepted as alpha character?
-                if ((keyPressed >= "a" && keyPressed <= "z") || (keyPressed >= "A" && keyPressed <= "Z")){
-                    console.log("Is a letter")
-                    checkForLetter(keyPressed)
-                }
+            // Make sure key pressed is an alpha character
+            if (isAlpha(event.key)) {
+                checkForLetter(event.key.toUpperCase())
             }
         }
 
         // Game Functions
         function checkForLetter(letter) {
             var foundLetter = false
-            console.log("CheckForLetter:letter= " + letter)
 
             // Search string for letter
             for (var i=0, j= wordToMatch.length; i<j; i++) {
                 if (letter === wordToMatch[i]) {
-                    guessingWord[i] = letter.toUpperCase()
+                    guessingWord[i] = letter
                     foundLetter = true
-                    console.log("guessingWord= "+ guessingWord)
-                    console.log("Letter index= " + i)
                 }
             }
-            // If letter not in string, decrement number of guesses  
+
             if (!foundLetter) {
-                numGuess--
-                // Check if inccorrect is already on the list
-                // Add incorrect letter to guessed letter list
-                guessedLetters.push(letter.toUpperCase())
-                console.log("numGuess= " + numGuess)
-                console.log("Guessed Letters= " + guessedLetters)
+                // Check if inccorrect guess is already on the list
+                if (!guessedLetters.includes(letter)) {
+                    // Add incorrect letter to guessed letter list
+                    guessedLetters.push(letter)
+                    // Decrement the number of remaining guesses
+                    numGuess--
+                }
                 if (numGuess === 0) {
-                    gameOver = true
+                    resetGame()
                 }
             }
-            console.log("Guessing word join= "+ guessingWord.join("") + " wordToMatch= " + wordToMatch)
+            // If guessing word matches random word
             if (guessingWord.join("") === wordToMatch) {
                 // Increment # of wins
                 wins++
-                console.log("Wins= " + wins)
-                gameOver = true
+                resetGame()
             }
 
             updateDisplay()
 
+        }
+
+        function isAlpha (ch){
+            return /^[A-Z]$/i.test(ch);
         }
 
         function resetGame() {
@@ -118,9 +112,13 @@
 
             // Reset the guessed word
             for (var i=0, j=wordToMatch.length; i < j; i++){
-                guessingWord.push("_")
+                // Put a space instead of an underscore between multi word "words"
+                if (wordToMatch[i] === " ") {
+                    guessingWord.push(" ")
+                } else {
+                    guessingWord.push("_")
+                }
             }
-            console.log(guessingWord)
 
             // Update the Display
             updateDisplay()
@@ -128,12 +126,9 @@
 
         function updateDisplay () {
             document.getElementById("totalWins").innerText = wins
-            document.getElementById("currentWord").innerText = ""
-            for (var i=0, j=guessingWord.length; i<j; i++) {
-                document.getElementById("currentWord").innerText += guessingWord[i]
-            }
+            document.getElementById("currentWord").innerText = guessingWord.join("")
             document.getElementById("remainingGuesses").innerText = numGuess
-            document.getElementById("guessedLetters").innerText =  guessedLetters
+            document.getElementById("guessedLetters").innerText =  guessedLetters.join(" ")
         }
     })
     </script>
