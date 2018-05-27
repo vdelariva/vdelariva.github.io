@@ -14,6 +14,11 @@
             background-size: cover;
             height: 100vh;
             color: white;
+            display: flex;
+        }
+        .container {
+            margin: auto;
+            text-align: center;
         }
         #currentWord {
             letter-spacing: 10px;
@@ -23,8 +28,8 @@
 
 <body>
     <div class="container">
-        <h1>Word Guess Game</h1>
-        <p>Welcome to Word Guess Name, press any key to get started!</p>
+        <h1>World Cities Word Guess Game</h1>
+        <p>Press any key to get started!</p>
 
         <!-- When user presses any key, start game -->
         <h4>Wins</h4>
@@ -70,16 +75,22 @@
         // Game Functions
         function checkForLetter(letter) {
             var foundLetter = false
+            var correctSound = document.createElement("audio")
+            var incorrectSound = document.createElement("audio")
+            correctSound.setAttribute("src", "assets/sounds/stairs.mp3")
+            incorrectSound.setAttribute("src","assets/sounds/croak.mp3")
 
             // Search string for letter
             for (var i=0, j= wordToMatch.length; i<j; i++) {
                 if (letter === wordToMatch[i]) {
                     guessingWord[i] = letter
                     foundLetter = true
+                    correctSound.play()
                 }
             }
 
             if (!foundLetter) {
+                incorrectSound.play()
                 // Check if inccorrect guess is already on the list
                 if (!guessedLetters.includes(letter)) {
                     // Add incorrect letter to guessed letter list
@@ -101,7 +112,7 @@
             updateDisplay()
 
         }
-
+        // Check in keypressed is between A-Z or a-z
         function isAlpha (ch){
             return /^[A-Z]$/i.test(ch);
         }
