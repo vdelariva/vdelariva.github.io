@@ -7,23 +7,8 @@
     <title>Word Guess Game</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <style>
-        body {
-            background-image: url(assets/images/BlackMarble.jpg);
-            background-repeat: no-repeat;
-            background-size: cover;
-            height: 100vh;
-            color: white;
-            display: flex;
-        }
-        .container {
-            margin: auto;
-            text-align: center;
-        }
-        #currentWord {
-            letter-spacing: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/style.css">
+
 </head>
 
 <body>
@@ -46,109 +31,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>    
-    <script>
-    $(document).ready(function() {
-
-        var possibleWords = ["florence", "paris", "madrid", "rome", "singapore", "dubai", "new york city", 
-                                "shanghai", "london", "tokyo", "sydney", "toronto", "beijing", "moscow",
-                                "johannesburg", "istanbul", "warsaw", "jakarta", "kuala lumpur", "mexico city",
-                                "hong kong", "chicago", "seoul", "los angeles", "mumbai"]
-
-        const maxGuess = 10
-
-        var guessedLetters = []
-        var guessingWord = []
-        var wordToMatch
-        var numGuess
-        var wins = 0
-
-        resetGame()
-
-        // Wait for key press
-        document.onkeypress = function(event) {
-            // Make sure key pressed is an alpha character
-            if (isAlpha(event.key)) {
-                checkForLetter(event.key.toUpperCase())
-            }
-        }
-
-        // Game Functions
-        function checkForLetter(letter) {
-            var foundLetter = false
-            var correctSound = document.createElement("audio")
-            var incorrectSound = document.createElement("audio")
-            correctSound.setAttribute("src", "assets/sounds/stairs.mp3")
-            incorrectSound.setAttribute("src","assets/sounds/croak.mp3")
-
-            // Search string for letter
-            for (var i=0, j= wordToMatch.length; i<j; i++) {
-                if (letter === wordToMatch[i]) {
-                    guessingWord[i] = letter
-                    foundLetter = true
-                    correctSound.play()
-                }
-            }
-
-            if (!foundLetter) {
-                incorrectSound.play()
-                // Check if inccorrect guess is already on the list
-                if (!guessedLetters.includes(letter)) {
-                    // Add incorrect letter to guessed letter list
-                    guessedLetters.push(letter)
-                    // Decrement the number of remaining guesses
-                    numGuess--
-                }
-                if (numGuess === 0) {
-                    resetGame()
-                }
-            }
-            // If guessing word matches random word
-            if (guessingWord.join("") === wordToMatch) {
-                // Increment # of wins
-                wins++
-                resetGame()
-            }
-
-            updateDisplay()
-
-        }
-        // Check in keypressed is between A-Z or a-z
-        function isAlpha (ch){
-            return /^[A-Z]$/i.test(ch);
-        }
-
-        function resetGame() {
-            numGuess = maxGuess
-
-            // Get a new word
-            wordToMatch = possibleWords[Math.floor(Math.random() * possibleWords.length)].toUpperCase()
-            console.log(wordToMatch)
-
-            // Reset word arrays
-            guessedLetters = []
-            guessingWord = []
-
-            // Reset the guessed word
-            for (var i=0, j=wordToMatch.length; i < j; i++){
-                // Put a space instead of an underscore between multi word "words"
-                if (wordToMatch[i] === " ") {
-                    guessingWord.push(" ")
-                } else {
-                    guessingWord.push("_")
-                }
-            }
-
-            // Update the Display
-            updateDisplay()
-        }
-
-        function updateDisplay () {
-            document.getElementById("totalWins").innerText = wins
-            document.getElementById("currentWord").innerText = guessingWord.join("")
-            document.getElementById("remainingGuesses").innerText = numGuess
-            document.getElementById("guessedLetters").innerText =  guessedLetters.join(" ")
-        }
-    })
-    </script>
+    <script src="assets/javascript/game.js"></script>
 </body>
 </html>
