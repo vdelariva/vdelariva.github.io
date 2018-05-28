@@ -24,6 +24,7 @@ $(document).ready(function() {
     }
 
     // Game Functions
+    // Check if letter is in word & process
     function checkForLetter(letter) {
         var foundLetter = false
         var correctSound = document.createElement("audio")
@@ -37,6 +38,12 @@ $(document).ready(function() {
                 guessingWord[i] = letter
                 foundLetter = true
                 correctSound.play()
+                // If guessing word matches random word
+                if (guessingWord.join("") === wordToMatch) {
+                    // Increment # of wins
+                    wins++
+                    resetGame()
+                }
             }
         }
 
@@ -52,12 +59,6 @@ $(document).ready(function() {
             if (numGuess === 0) {
                 resetGame()
             }
-        }
-        // If guessing word matches random word
-        if (guessingWord.join("") === wordToMatch) {
-            // Increment # of wins
-            wins++
-            resetGame()
         }
 
         updateDisplay()
