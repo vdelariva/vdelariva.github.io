@@ -6,6 +6,7 @@ $(document).ready(function() {
                             "hong kong", "chicago", "seoul", "los angeles", "mumbai"]
 
     const maxGuess = 10
+    var pauseGame = false
 
     var guessedLetters = []
     var guessingWord = []
@@ -18,7 +19,7 @@ $(document).ready(function() {
     // Wait for key press
     document.onkeypress = function(event) {
         // Make sure key pressed is an alpha character
-        if (isAlpha(event.key)) {
+        if (isAlpha(event.key) && !pauseGame) {
             checkForLetter(event.key.toUpperCase())
         }
     }
@@ -42,9 +43,9 @@ $(document).ready(function() {
                 if (guessingWord.join("") === wordToMatch) {
                     // Increment # of wins
                     wins++
+                    pauseGame = true
                     updateDisplay()
-                    setTimeout(function() {
-                        resetGame()},5000)
+                    setTimeout(resetGame,5000)
                 }
             }
         }
@@ -61,8 +62,8 @@ $(document).ready(function() {
             if (numGuess === 0) {
                 // Display word before reseting game
                 guessingWord = wordToMatch.split()
-                setTimeout(function() {
-                    resetGame()}, 5000)
+                pauseGame = true
+                setTimeout(resetGame, 5000)
             }
         }
 
@@ -76,6 +77,7 @@ $(document).ready(function() {
 
     function resetGame() {
         numGuess = maxGuess
+        pauseGame = false
 
         // Get a new word
         wordToMatch = possibleWords[Math.floor(Math.random() * possibleWords.length)].toUpperCase()
