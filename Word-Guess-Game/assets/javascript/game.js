@@ -42,7 +42,9 @@ $(document).ready(function() {
                 if (guessingWord.join("") === wordToMatch) {
                     // Increment # of wins
                     wins++
-                    resetGame()
+                    updateDisplay()
+                    setTimeout(function() {
+                        resetGame()},5000)
                 }
             }
         }
@@ -57,9 +59,13 @@ $(document).ready(function() {
                 numGuess--
             }
             if (numGuess === 0) {
-                resetGame()
+                // Display word before reseting game
+                guessingWord = wordToMatch.split()
+                setTimeout(function() {
+                    resetGame()}, 5000)
             }
         }
+
 
         updateDisplay()
 
