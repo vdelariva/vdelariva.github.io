@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: white;
+}
+
+.container {
+    width: 50%;
+}
+
+.crystals {
+    height: 50px;
+}
+
+#randomScore {
+    height: 100px;
+    width: 100px;
+    border: solid blue 1px;
+}
+#status {
+    height: 100px;
+    width: 100px;
+    border: solid green 1px;
+}
+
+#playerScore {
+    height: 100px;
+    width: 100px;
+    border: solid red 1px;
+}
