@@ -11,15 +11,14 @@ $(document).ready(function() {
 
         if (playerScore === randomScore) {
             wins++;
+            $("#status").html("You Win!")
             resetGame();
         }
         else if (playerScore > randomScore) {
             losses++;
+            $("#status").html("You Lose!")
             resetGame();
         }
-        
-
-
 });
 })
 
