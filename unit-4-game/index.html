@@ -10,43 +10,67 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
-<body>
-    <div class="container">
-        <!-- Game Name -->
+<body>   
+    <div class="jumbotron jumbotron-fluid">
         <h1>Crystals Collector!</h1>
-
-        <!-- Instructions -->
-        <p>You will be given a random number at the start of the game</p>
-        <p>There are crystals below. By clicking on a crystal you will add a specific amount of points to your score.</p>
-        <p>You win the game by matching your total score to random number, you lose the game if your total score goes above the random number.</p>
-        <p>The value of each crystal is hidden from you until you click on it.</p>
-        <p>Each time when the game starts, the game will change the values of each crystal.</p>
-        
-        <!-- Match Score & Win/Loss Tally -->
-        <div class=row>
-            <div class="col-md-3">
-                <div id="randomScore"></div>
+    </div>
+     
+    <div class="container">
+            
+        <!-- Game Name -->
+        <div class="row">
+            <div class="col-md-5 shadow-lg p-3 mb-5 bg-white rounded">
+                <!-- Instructions -->
+                <p>You will be given a random number at the start of the game</p>
+                <p>There are crystals below. By clicking on a crystal you will add a specific amount of points to your score.</p>
+                <p>You win the game by matching your total score to random number, you lose the game if your total score goes above the random number.</p>
+                <p>The value of each crystal is hidden from you until you click on it.</p>
+                <p>Each time when the game starts, the game will change the values of each crystal.</p>
             </div>
-            <div class="col-md-2">
-                <div id="status">
-                    <div id="result"></div>
-                    <p>Wins: <span id="wins"></span></p>
-                    <p>Losses: <span id="losses"></span></p>
+
+            <div class="col-md-1"></div>
+            
+            <!-- Display the crystals -->
+            <div class="col-md-6 shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="row">
+                    <div class="col-md-12 d-flex justify-content-around">
+                    <!-- Crystals -->
+                        <img class="crystals" id="red" src="assets/images/redgem.jpg" class="img-circle border border-dark" alt="Red Crystal">
+                        <img class="crystals" id="blue" src="assets/images/bluegem.jpeg" class="img-thumbnail border border-info" alt="Blue Crystal">
+                        <img class="crystals" id="green" src="assets/images/greengem.jpg" class="img-thumbnail" alt="Green Crystal">
+                        <img class="crystals" id="purple" src="assets/images/purplegem.jpeg" class="img-thumbnail" alt="Purple Crystal">
+                    </div>
+                </div>
+
+                <!-- Show Target score & player score -->
+                <div class="row">
+                    <div class="col-md-6 border border-primary">
+                        <div id="randomScore"></div>
+                    </div>
+                    <div class="col-md-6 border border-info">
+                        <!-- <div id="yourScore"> -->
+                            <!-- Your Score -->
+                            <!-- <p id="yourScore">Your Total Score Is:</p> -->
+                            <!-- Player Score -->
+                            <div id="playerScore"></div>
+                        <!-- </div> -->
+                    </div>
+                </div>
+
+                <!-- Game Status/Results -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Wins: <span id="wins"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Losses: <span id="losses"></span></p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Crystals -->
-            <img class="crystals" id="red" src="assets/images/redgem.jpg" class="img-thumbnail" alt="Red Crystal">
-            <img class="crystals" id="blue" src="assets/images/bluegem.jpeg" class="img-thumbnail" alt="Blue Crystal">
-            <img class="crystals" id="green" src="assets/images/greengem.jpg" class="img-thumbnail" alt="Green Crystal">
-            <img class="crystals" id="purple" src="assets/images/purplegem.jpeg" class="img-thumbnail" alt="Purple Crystal">
         
-        <!-- Your Score -->
-        <p id="yourScore">Your Total Score Is:</p>
 
-        <!-- Player Score -->
-        <div id="playerScore"></div>
     </div>
 
 <!-- Scripts -->

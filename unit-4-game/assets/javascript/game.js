@@ -3,18 +3,31 @@ $(document).ready(function() {
     resetGame();
 
     $(".crystals").on("click",function() {
-        console.log($(this).attr("id"))
+        // console.log($(this).attr("id"));
+        // console.log(this);
+        // console.log(playerScore);
 
-    console.log("Red:" + redGem.value)
-    console.log("Blue:" + blueGem.value)
-    console.log("Green:" + greenGem.value)
-    console.log("Purple:"+ purpleGem.value)
+        addScore($(this).attr("id"));
+
+        if (playerScore === randomScore) {
+            wins++;
+            resetGame();
+        }
+        else if (playerScore > randomScore) {
+            losses++;
+            resetGame();
+        }
+        
+
 
 });
 })
 
     // Variables
     var playerScore;
+    var randomScore;
+    var wins = 0;
+    var losses = 0;
 
     var redGem = new Gem();
     var blueGem = new Gem();
@@ -25,21 +38,67 @@ $(document).ready(function() {
 
     function Gem (value) {
         this.value = value;
-        function addScore() {
-            playerScore += this.value;
+        // function addScore() {
+            // playerScore += this.value;
+        // }
+    }
+
+    function addScore(gem) {
+        switch(gem) {
+            case "red":
+                playerScore += redGem.value;
+                break;
+            case "blue":
+                playerScore += blueGem.value;
+                break;
+            case "green":
+                playerScore += greenGem.value;
+                break;
+            case "purple":
+                playerScore += purpleGem.value;
+                break;
         }
+        // Display the new score
+        $("#playerScore").html(playerScore);
     }
 
     function resetGame() {
+        var powersArr = [];
         playerScore = 0;
-        redGem.value = Math.floor(Math.random() *12)+1;
-        blueGem.value = Math.floor(Math.random() *12)+1;
-        greenGem.value = Math.floor(Math.random() *12)+1;
-        purpleGem.value = Math.floor(Math.random() *12)+1;
+        randomScore = Math.floor(Math.random() * 102) + 19;
 
-        // Display
+        redGem.value = getRandomPower(powersArr)
+        blueGem.value = getRandomPower(powersArr);
+        greenGem.value = getRandomPower(powersArr);
+        purpleGem.value = getRandomPower(powersArr);
+
+
+
+        console.log("Red:" + redGem.value)
+        console.log("Blue:" + blueGem.value)
+        console.log("Green:" + greenGem.value)
+        console.log("Purple:"+ purpleGem.value)
+    
+
+        // Display values
         $("#playerScore").html(playerScore);
-        $("#randomScore").html(Math.floor(Math.random() * 102) + 19);
+        $("#randomScore").html(randomScore);
+        $("#wins").html(wins);
+        $("#losses").html(losses);
+
+    }
+
+    function getRandomPower(pa) {
+        var power;
+
+        // Loop until a unique power value is generated
+        do {
+            power = Math.floor(Math.random() * 12)+1;
+        } while(pa.includes(power));
+
+        pa.push(power);
+
+        return power;
 
     }
 
