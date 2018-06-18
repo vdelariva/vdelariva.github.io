@@ -135,6 +135,10 @@ footer {
     outline-offset: 5px;
   }
 
+.img-Border {
+    border: solid 1px lightgray;
+}
+
 .container {
     width: 960px;
     margin: 20px auto 50px;
